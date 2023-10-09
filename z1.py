@@ -8,19 +8,19 @@ for i in range(n):
                            .split(' '))))
 print("Enter the right-hand coefficients of the constraints on one line with space delimiter")
 coeff_constr = list(map(int, input().split()))
-coeff_constr.insert(0, 0)
+coeff_constr.append(0)
 print("Enter 1 if your problem is maximize and -1 if your problem is minimize")
 k = int(input())
 for i in range(len(coeff_main)):
-    coeff_main = coeff_main * k
+    coeff_main[i] = coeff_main[i] * k
 for i in range(len(coeff_main)):
-    coeff_main = coeff_main * -1
+    coeff_main[i] = coeff_main[i] * -1
 print("Enter the approximation accuracy")
 approximation_accuracy = int(input())
-matrix.append(coeff_main)
+matrix.append(coeff_main.copy())
 for i in range(0, len(matrix)):
     matrix[i].append(coeff_constr[i])
-
+print(matrix)
 
 
 
