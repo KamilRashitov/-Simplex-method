@@ -3,7 +3,7 @@ import math
 from colorama import Fore, Style
 
 
-def print_tableau(tableau, column, row):
+def print_tableau(tableau, row,column):
     m, n = len(tableau), len(tableau[0])
     for i in range(m):
         if i == column:
