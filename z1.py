@@ -8,6 +8,7 @@ for i in range(n):
                            .split(' '))))
 print("Enter the right-hand coefficients of the constraints on one line with space delimiter")
 coeff_constr = list(map(int, input().split()))
+coeff_constr.insert(0, 0)
 print("Enter 1 if your problem is maximize and -1 if your problem is minimize")
 k = int(input())
 for i in range(len(coeff_main)):
