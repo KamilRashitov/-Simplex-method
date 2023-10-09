@@ -16,10 +16,10 @@ for i in range(len(coeff_main)):
     coeff_main = coeff_main * -1
 print("Enter the approximation accuracy")
 approximation_accuracy = int(input())
-matrix.insert(0, coeff_main)
-for i in range(1, len(matrix)):
-    matrix[i].append(coeff_constr[i - 1])
-    
+matrix.append(coeff_main)
+for i in range(0, len(matrix) - 1):
+    matrix[i].append(coeff_constr[i])
+
 
 
 
