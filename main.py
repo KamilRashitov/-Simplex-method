@@ -1,4 +1,6 @@
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style
+
+
 def print_tableau(tableau, column, row):
     m, n = len(tableau), len(tableau[0])
     for i in range(m):
@@ -12,6 +14,7 @@ def print_tableau(tableau, column, row):
                 else:
                     print(f"{tableau[i][j]:10.2f}", end=" ")
         print()
+
 
 def simplex_method(tableau):
     m, n = len(tableau), len(tableau[0])
@@ -64,12 +67,29 @@ def simplex_method(tableau):
     print_tableau(tableau, -1, -1)
     return tableau
 
-tableau = [
-    [2, -1, 0, -2, 1, 0, 16],
-    [3, 2, 1, -3, 0, 0, 18],
-    [-1, 3, 0, 4, 0, 1, 24],
-    [-2, -3, 0, 1, 0, 0, 0]
-]
 
-table_ans = simplex_method(tableau)
+print("Enter the coefficients of the main problem on one line with space delimiter")
+coeff_main = list(map(int, input().split()))
+print("Enter number of constraints")
+n = int(input())
+matrix = []
+for i in range(n):
+    matrix.append(list(map(int, input("Enter coefficients of " + str(i + 1) + "th constraint with space delimiter")
+                           .split(' '))))
+print("Enter the right-hand coefficients of the constraints on one line with space delimiter")
+coeff_constr = list(map(int, input().split()))
+coeff_constr.append(0)
+print("Enter 1 if your problem is maximize and -1 if your problem is minimize")
+k = int(input())
+for i in range(len(coeff_main)):
+    coeff_main[i] = coeff_main[i] * k
+for i in range(len(coeff_main)):
+    coeff_main[i] = coeff_main[i] * -1
+print("Enter the approximation accuracy")
+approximation_accuracy = int(input())
+matrix.append(coeff_main.copy())
+for i in range(0, len(matrix)):
+    matrix[i].append(coeff_constr[i])
+
+table_ans = simplex_method(matrix)
 print(f"Result: {table_ans[-1][-1]}")
