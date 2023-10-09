@@ -1,7 +1,18 @@
+def print_tableau(tableau):
+    m, n = len(tableau), len(tableau[0])
+    for i in range(m):
+        for j in range(n):
+            print(f"{tableau[i][j]:10.2f}", end=" ")
+        print()
+
 def simplex_method(tableau):
     m, n = len(tableau), len(tableau[0])
+    step = 0
 
     while True:
+        print(f"Step {step}:\n")
+        print_tableau(tableau)
+
         # Looking for pivot
         col_i = next((i for i in range(n - 1) if tableau[-1][i] < 0), None)
 
@@ -19,9 +30,16 @@ def simplex_method(tableau):
 
         row_i = ratios.index(min(ratios))
 
+        pivot_value = tableau[row_i][col_i]
+        print(f"Pivot Column (Column {col_i + 1}):")
+        print_tableau(tableau)
+        print(f"Pivot Row (Row {row_i + 1}):")
+        print_tableau(tableau)
+
         # Normalizing of the row
-        pivot = tableau[row_i][col_i]
-        tableau[row_i] = [el / pivot for el in tableau[row_i]]
+        tableau[row_i] = [el / pivot_value for el in tableau[row_i]]
+        print(f"Normalize Row {row_i + 1}:")
+        print_tableau(tableau)
 
         # Recalculation of values
         for i in range(m):
@@ -29,11 +47,15 @@ def simplex_method(tableau):
                 continue
             factor = tableau[i][col_i]
             tableau[i] = [tableau[i][j] - factor * tableau[row_i][j] for j in range(n)]
+        print(f"Recalculate Rows:")
+        print_tableau(tableau)
 
+        step += 1
+
+    print(f"Step {step}:\n")
+    print_tableau(tableau)
     return tableau
 
-
-# example
 tableau = [
     [2, -1, 0, -2, 1, 0, 16],
     [3, 2, 1, -3, 0, 0, 18],
@@ -41,7 +63,5 @@ tableau = [
     [-2, -3, 0, 1, 0, 0, 0]
 ]
 
-result = simplex_method(tableau)
-for row in result:
-    print(row)
-
+table_ans = simplex_method(tableau)
+print(f"Result: {table_ans[-1][-1]}")
