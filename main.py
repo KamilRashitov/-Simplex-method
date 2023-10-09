@@ -1,8 +1,16 @@
-def print_tableau(tableau):
+from colorama import Fore, Back, Style, init
+def print_tableau(tableau, column, row):
     m, n = len(tableau), len(tableau[0])
     for i in range(m):
-        for j in range(n):
-            print(f"{tableau[i][j]:10.2f}", end=" ")
+        if i == column:
+            for j in range(n):
+                print(f"{Fore.CYAN}{tableau[i][j]:10.2f}{Style.RESET_ALL}", end=" ")
+        else:
+            for j in range(n):
+                if j == row:
+                    print(f"{Fore.MAGENTA}{tableau[i][j]:10.2f}{Style.RESET_ALL}", end=" ")
+                else:
+                    print(f"{tableau[i][j]:10.2f}", end=" ")
         print()
 
 def simplex_method(tableau):
@@ -11,7 +19,7 @@ def simplex_method(tableau):
 
     while True:
         print(f"Step {step}:\n")
-        print_tableau(tableau)
+        print_tableau(tableau, -1, -1)
 
         # Looking for pivot
         col_i = next((i for i in range(n - 1) if tableau[-1][i] < 0), None)
@@ -32,14 +40,14 @@ def simplex_method(tableau):
 
         pivot_value = tableau[row_i][col_i]
         print(f"Pivot Column (Column {col_i + 1}):")
-        print_tableau(tableau)
+        print_tableau(tableau, col_i, -1)
         print(f"Pivot Row (Row {row_i + 1}):")
-        print_tableau(tableau)
+        print_tableau(tableau, -1, row_i)
 
         # Normalizing of the row
         tableau[row_i] = [el / pivot_value for el in tableau[row_i]]
         print(f"Normalize Row {row_i + 1}:")
-        print_tableau(tableau)
+        print_tableau(tableau, -1, row_i)
 
         # Recalculation of values
         for i in range(m):
@@ -48,12 +56,12 @@ def simplex_method(tableau):
             factor = tableau[i][col_i]
             tableau[i] = [tableau[i][j] - factor * tableau[row_i][j] for j in range(n)]
         print(f"Recalculate Rows:")
-        print_tableau(tableau)
+        print_tableau(tableau, -1, -1)
 
         step += 1
 
     print(f"Step {step}:\n")
-    print_tableau(tableau)
+    print_tableau(tableau, -1, -1)
     return tableau
 
 tableau = [
