@@ -1,3 +1,5 @@
+import math
+
 from colorama import Fore, Style
 
 
@@ -72,9 +74,9 @@ print("Enter the coefficients of the main problem on one line with space delimit
 coeff_main = list(map(int, input().split()))
 print("Enter number of constraints")
 n = int(input())
-matrix = []
+tableau = []
 for i in range(n):
-    matrix.append(list(map(int, input("Enter coefficients of " + str(i + 1) + "th constraint with space delimiter")
+    tableau.append(list(map(int, input("Enter coefficients of " + str(i + 1) + "th constraint with space delimiter")
                            .split(' '))))
 print("Enter the right-hand coefficients of the constraints on one line with space delimiter")
 coeff_constr = list(map(int, input().split()))
@@ -87,9 +89,10 @@ for i in range(len(coeff_main)):
     coeff_main[i] = coeff_main[i] * -1
 print("Enter the approximation accuracy")
 approximation_accuracy = int(input())
-matrix.append(coeff_main.copy())
-for i in range(0, len(matrix)):
-    matrix[i].append(coeff_constr[i])
+tableau.append(coeff_main.copy())
+for i in range(0, len(tableau)):
+    tableau[i].append(coeff_constr[i])
 
-table_ans = simplex_method(matrix)
-print(f"Result: {table_ans[-1][-1]}")
+tableau = simplex_method(tableau)
+print(f"Result: {math.floor(tableau[-1][-1] * 10**approximation_accuracy) / 10**approximation_accuracy}")
+
